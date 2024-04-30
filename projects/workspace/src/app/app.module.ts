@@ -7,6 +7,8 @@ import { RouteStepComponent } from './custom-step/route-step/route-step.componen
 import { NestedFlowComponent } from './nested-flow/nested-flow.component';
 import { FormStepComponent } from './form-step/form-step.component';
 import { FormsModule } from '@angular/forms';
+import { BasicStepComponent } from './basic-step/basic-step.component';
+import { UtilsService } from './services/utils.service';
 
 @NgModule({
   declarations: [
@@ -15,9 +17,10 @@ import { FormsModule } from '@angular/forms';
     RouteStepComponent,
     NestedFlowComponent,
     FormStepComponent,
+    BasicStepComponent
   ],
   imports: [BrowserModule, NgFlowchartModule, FormsModule],
-  providers: [],
+  providers: [UtilsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

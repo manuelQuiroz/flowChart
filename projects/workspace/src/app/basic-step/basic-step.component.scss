@@ -1,0 +1,39 @@
+#rombo .contenido {
+  border-radius: 10px;
+  background-color: rgb(60, 221, 185);
+  padding: 0;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  text-align: center;
+  display: block;
+  border: 5px solid white;
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+  transform: rotate(45deg);
+  transition: transform 0.1s cubic-bezier(0, 1.8, 1, 1.8);
+}
+#rombo {
+  padding: 41.42px;
+  float: left;
+}
+#rombo .contenido:hover {
+  transform: rotate(45deg) scale(1.005) translateX(-0.5px);
+  background-color: rgb(20, 181, 145);
+  box-shadow: 10px 10px 50px rgb(0, 161, 125) inset,
+    -10px -10px 50px rgb(0, 161, 125) inset;
+}
+#rombo .contenido .texto {
+  border-radius: 4px;
+  font-family: Verdana;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  top: 50%;
+  -webkit-transform: translateY(-50%) rotate(-45deg);
+  -ms-transform: translateY(-50%) rotate(-45deg);
+  transform: translateY(-50%) rotate(-45deg);
+  font-size: 1vw;
+  text-transform: uppercase;
+}

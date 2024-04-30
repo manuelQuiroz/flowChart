@@ -12,6 +12,9 @@ import { CustomStepComponent } from './custom-step/custom-step.component';
 import { RouteStepComponent } from './custom-step/route-step/route-step.component';
 import { FormStepComponent } from './form-step/form-step.component';
 import { NestedFlowComponent } from './nested-flow/nested-flow.component';
+import { dataFlow } from './partials/data-flow';
+import { BasicStepComponent } from './basic-step/basic-step.component';
+import { UtilsService } from './services/utils.service';
 
 @Component({
   selector: 'app-root',
@@ -23,52 +26,62 @@ export class AppComponent implements AfterViewInit {
   title = 'workspace';
 
   callbacks: NgFlowchart.Callbacks = {};
+ 
   options: NgFlowchart.Options = {
     stepGap: 40,
     rootPosition: 'TOP_CENTER',
     zoom: {
-      mode: 'WHEEL',
+      mode: 'MANUAL',
       skipRender: true,
     },
     dragScroll: ['RIGHT', 'MIDDLE'],
     orientation: 'VERTICAL',
-    manualConnectors: true,
+    manualConnectors: false,
   };
 
   @ViewChild('normalStep')
   normalStepTemplate: TemplateRef<any>;
 
-  sampleJson =
-    '{"root":{"id":"s1674421266194","type":"log","data":{"name":"Log","icon":{"name":"log-icon","color":"blue"},"config":{"message":null,"severity":null}},"children":[{"id":"s1674421267975","type":"log","data":{"name":"Log","icon":{"name":"log-icon","color":"blue"},"config":{"message":null,"severity":null}},"children":[{"id":"s1674421269738","type":"log","data":{"name":"Log","icon":{"name":"log-icon","color":"blue"},"config":{"message":null,"severity":null}},"children":[]}]},{"id":"s1674421268826","type":"log","data":{"name":"Log","icon":{"name":"log-icon","color":"blue"},"config":{"message":null,"severity":null}},"children":[]}]},"connectors":[{"startStepId":"s1674421269738","endStepId":"s1674421268826"}]}';
+  sampleJson = JSON.stringify(dataFlow)
+    
 
-  items = [
-    {
-      name: 'Logger',
-      type: 'log',
-      data: {
-        name: 'Log',
-        icon: { name: 'log-icon', color: 'blue' },
-        config: {
-          message: null,
-          severity: null,
-        },
-      },
-    },
-  ];
+  // items = [
+  //   {
+  //     name: 'Numero',
+  //     type: 'num',
+  //     data: {
+  //       name: 'Número',
+  //       icon: { name: 'log-icon', color: 'blue' },
+  //       config: {
+  //         message: null,
+  //         severity: null,
+  //       },
+  //     },
+  //   },
+  // ];
 
   customOps = [
+    
     {
-      paletteName: 'Router',
+      paletteName: 'Click',
+      step: {
+        template: BasicStepComponent,
+        type: 'basic',
+        data: { name: 'abre excel'},
+      },
+    },
+    {
+      paletteName: 'Proceso',
       step: {
         template: CustomStepComponent,
-        type: 'router',
+        type: 'process',
         data: {
-          name: 'Routing Block',
+          name: 'Process',
         },
       },
     },
     {
-      paletteName: 'Form Step',
+      paletteName: 'Formulario',
       step: {
         template: FormStepComponent,
         type: 'form-step',
@@ -76,12 +89,22 @@ export class AppComponent implements AfterViewInit {
       },
     },
     {
-      paletteName: 'Nested Flow',
+      paletteName: 'OK',
       step: {
         template: NestedFlowComponent,
         type: 'nested-flow',
         data: {
-          name: 'Nested Flow',
+          name: 'Hacer esto',
+        },
+      },
+    },
+    {
+      paletteName: 'De lo contrario',
+      step: {
+        template: NestedFlowComponent,
+        type: 'nested-flow',
+        data: {
+          name: 'De lo contrario',
         },
       },
     },
@@ -92,7 +115,9 @@ export class AppComponent implements AfterViewInit {
 
   disabled = false;
 
-  constructor(private stepRegistry: NgFlowchartStepRegistry) {
+  constructor(
+    private _utilS: UtilsService,
+    private stepRegistry: NgFlowchartStepRegistry) {
     this.callbacks.onDropError = this.onDropError;
     this.callbacks.onMoveError = this.onMoveError;
     this.callbacks.afterDeleteStep = this.afterDeleteStep;
@@ -103,37 +128,38 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.stepRegistry.registerStep('rest-get', this.normalStepTemplate);
-    this.stepRegistry.registerStep('log', this.normalStepTemplate);
-    this.stepRegistry.registerStep('router', CustomStepComponent);
+      // this.stepRegistry.registerStep('rest-get', this.normalStepTemplate);
+    // this.stepRegistry.registerStep('num', this.normalStepTemplate);
+    this.stepRegistry.registerStep('basic', BasicStepComponent);
+    this.stepRegistry.registerStep('process', CustomStepComponent);
     this.stepRegistry.registerStep('nested-flow', NestedFlowComponent);
-    this.stepRegistry.registerStep('form-step', FormStepComponent);
-    this.stepRegistry.registerStep('route-step', RouteStepComponent);
+    // this.stepRegistry.registerStep('form-step', FormStepComponent);
+    this.stepRegistry.registerStep('process-step', RouteStepComponent);
     this.showUpload();
   }
 
   onDropError(error: NgFlowchart.DropError) {
-    console.log(error);
+    console.log(error, '<--- DropError');
   }
 
   onMoveError(error: NgFlowchart.MoveError) {
-    console.log(error);
+    console.log(error, '<--- MoveError');
   }
 
   beforeDeleteStep(step) {
-    console.log(JSON.stringify(step.children));
+    console.log(JSON.stringify(step.children), '<-- beforeDeleteStep');
   }
 
   afterDeleteStep(step) {
-    console.log(JSON.stringify(step.children));
+    console.log(JSON.stringify(step.children), '<--- afterDeleteStep');
   }
 
   onLinkConnector(conn) {
-    console.log(conn);
+    console.log(conn, '<--- onLinkConnector');
   }
 
   afterDeleteConnector(conn) {
-    console.log(conn);
+    console.log(conn, '<--- afterDeleteConnector');
   }
 
   afterScale(scale: number): void {
@@ -153,14 +179,16 @@ export class AppComponent implements AfterViewInit {
   showFlowData() {
     let json = this.canvas.getFlow().toJSON(4);
 
-    var x = window.open();
+    console.log(JSON.parse (json));
+    
+   /*  var x = window.open();
     x.document.open();
     x.document.write(
       '<html><head><title>Flowchart Json</title></head><body><pre>' +
         json +
         '</pre></body></html>'
     );
-    x.document.close();
+    x.document.close(); */
   }
 
   clearData() {

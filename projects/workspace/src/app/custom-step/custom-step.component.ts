@@ -36,7 +36,7 @@ export class CustomStepComponent
 
   onAddRoute() {
     let route = {
-      name: 'New Route',
+      name: 'Nuevo hijo',
       condition: '',
       sequence: null,
     };
@@ -46,7 +46,7 @@ export class CustomStepComponent
     this.addChild(
       {
         template: RouteStepComponent,
-        type: 'route-step',
+        type: 'process-step',
         data: route,
       },
       {

@@ -163,6 +163,7 @@
     "schematicCollections": [
       "@angular-eslint/schematics",
       "@angular-eslint/schematics"
-    ]
+    ],
+    "analytics": "007727bf-3a23-4c10-82be-8ceba70abbe8"
   }
 }

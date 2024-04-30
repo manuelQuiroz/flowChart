@@ -58,7 +58,7 @@
   &.ngflowchart-connector-selected {
     z-index: 4;
     & #arrowpath {
-      stroke: green;
+      stroke: red;
     }
   }
 }

@@ -7,7 +7,7 @@ body {
   margin: 0;
   font-family: Roboto, 'Poppins', sans-serif;
 }
-
+/* 
 .ngflowchart-step-wrapper[ngflowchart-drop-hover]::after {
   background: #a3e798 !important;
 }
@@ -24,7 +24,7 @@ body {
   & #arrowpath {
     stroke: darkgrey;
   }
-}
+} */
 
 .step {
   background: #fbfbfb;
@@ -35,4 +35,25 @@ body {
   padding: 1em;
   min-width: 200px;
   min-height: 100px;
+}
+
+/** The drop icon outer circle */
+.ngflowchart-step-wrapper[ngflowchart-drop-hover]::after {
+  background: red !important;
+}
+
+/** The drop icon inner circle */
+.ngflowchart-step-wrapper[ngflowchart-drop-hover]::before {
+  background: green !important;
+}
+
+/** The arrow paths and arrow head */
+.ngflowchart-arrow {
+  & #arrowhead {
+    fill: darkgrey;
+  }
+
+  & #arrowpath {
+    stroke: darkgrey;
+  }
 }

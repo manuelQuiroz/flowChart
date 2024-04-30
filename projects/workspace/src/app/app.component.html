@@ -7,7 +7,7 @@
     [disabled]="disabled"></div>
   <div id="palette">
     <section>
-      <div
+      <!-- <div
         class="plugin-op"
         *ngFor="let item of items"
         [ngFlowchartStep]="{
@@ -16,13 +16,15 @@
           data: item.data
         }">
         <span>{{ item.name }}</span>
-      </div>
+      </div> -->
+
       <div
         class="plugin-op"
         *ngFor="let op of customOps"
         [ngFlowchartStep]="op.step">
         <span>{{ op.paletteName }}</span>
       </div>
+
     </section>
 
     <section>
@@ -30,7 +32,7 @@
       <button (click)="showUpload()">Upload JSON</button>
     </section>
     <section>
-      <div class="sub-section">
+      <!-- <div class="sub-section">
         <label for="step-gap-select" class="wide">Step Gap</label>
         <select
           name="step-gap-select"
@@ -48,9 +50,9 @@
           type="checkbox"
           name="sequential"
           (change)="onSequentialChange($event)" />
-      </div>
+      </div> -->
       <div class="sub-section">
-        <label for="orientation">Horizontal Orientation</label>
+        <label for="orientation">Horizontal </label>
         <input
           type="checkbox"
           name="orientation"
